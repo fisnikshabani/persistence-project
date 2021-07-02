@@ -16,6 +16,7 @@ public class Project {
     private String code; // the code field is the Project's business key
 
     private String name;
+
     private String description;
 
     @OneToMany(mappedBy = "project", orphanRemoval = true, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
