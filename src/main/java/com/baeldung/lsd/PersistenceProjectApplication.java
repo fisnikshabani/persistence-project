@@ -48,5 +48,11 @@ public class PersistenceProjectApplication implements ApplicationRunner {
 
         long noOfUsers = userRepository.count();
         LOG.info("Number of users: \n{}", noOfUsers);
+
+        Optional<Project> P1 = projectRepository.findByCodeEquals("P1");
+        LOG.info("Project with code P1: \n", P1);
+
+        int projectCount = projectRepository.countByName("Project 1");
+        LOG.info("Number of projects with name: 'Project 1':\n", projectCount);
     }
 }

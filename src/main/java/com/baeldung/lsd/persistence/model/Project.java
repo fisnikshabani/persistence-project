@@ -29,7 +29,6 @@ public class Project {
     }
 
     public Project() {
-
     }
 
     public Long getId() {
