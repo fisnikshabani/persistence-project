@@ -14,8 +14,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 
 @SpringBootApplication
@@ -54,5 +58,25 @@ public class PersistenceProjectApplication implements ApplicationRunner {
 
         int projectCount = projectRepository.countByName("Project 1");
         LOG.info("Number of projects with name: 'Project 1':\n", projectCount);
+
+        List<Project> projectList1 = projectRepository.findByNameAndDescriptionPositionalBind("Project 3", "About Project 3");
+        LOG.info("find Project 3 using positional parameters :\n{}", projectList1);
+
+        List<Project> projectList3 = projectRepository.findByCodeIn(Set.of("P2", "P3"));
+        LOG.info("find Project 2 and Project 3 using IN clause:\n{}", projectList3);
+
+        List<Project> projectList4 = projectRepository.findByDescriptionIsLike("About");
+        LOG.info("find Projects containing 'About' using LIKE clause:\n{}", projectList4);
+
+        List<Project> projectList5 = projectRepository.findByDescriptionWithPrefixAndSuffix("About", "3");
+        LOG.info("find Project 3 using prefix and suffix in LIKE clause:\n{}", projectList5);
+
+       List<Project> projectList6 = projectRepository.findByDescriptionIsShorterThan(16);
+        LOG.info("find Projects with short descriptions using Native query:\n{}", projectList6);
+
+        List<Project> projectList7 = projectRepository.findByDescriptionWithPrefix("%");
+        LOG.info("find all Projects by passing '%' to LIKE clause:\n{}", projectList7);
+
+
     }
 }
